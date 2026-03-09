@@ -66,21 +66,20 @@ Email_Enrichment_Tool
 ├── .gitignore
 │
 ├── src
-│ ├── parser.py
-│ ├── domain.py
-│ ├── scraper.py
-│ ├── search.py
-│ ├── classifier.py
-│ └── confidence.py
+│   ├── parser.py
+│   ├── domain.py
+│   ├── scraper.py
+│   ├── search.py
+│   ├── classifier.py
+│   └── confidence.py
 │
 ├── templates
-│ └── index.html
+│   └── index.html
 │
 ├── data
-│ └── input.csv
+│   └── input.csv
 │
 └── test_selenium.py
-
 ---
 
 ## How the System Works
