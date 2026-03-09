@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 
 <meta charset="UTF-8">
-<title>Email → Company / Sector Identification</title>
+<title>Email Domain Intelligence Tool</title>
 
 <style>
 
@@ -21,22 +20,29 @@ margin:auto;
 }
 
 h1{
-color:#333;
-margin-bottom:25px;
+color:#1f2937;
+margin-bottom:10px;
 }
 
-.input-group{
+.subtitle{
+color:#555;
+font-size:16px;
+margin-bottom:30px;
+}
+
+.upload-section{
+background:white;
+border-radius:10px;
+padding:25px;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+margin-bottom:30px;
+}
+
+.upload-row{
 display:flex;
-gap:10px;
-margin-bottom:20px;
-}
-
-input[type="text"]{
-flex:1;
-padding:12px;
-font-size:15px;
-border-radius:6px;
-border:1px solid #ccc;
+gap:15px;
+align-items:center;
+margin-top:10px;
 }
 
 input[type="file"]{
@@ -47,10 +53,11 @@ button{
 background:#2563eb;
 color:white;
 border:none;
-padding:12px 20px;
+padding:12px 22px;
 font-size:15px;
 border-radius:6px;
 cursor:pointer;
+font-weight:500;
 }
 
 button:hover{
@@ -59,8 +66,8 @@ background:#1e4ed8;
 
 .card{
 background:white;
-border-radius:8px;
-box-shadow:0 3px 10px rgba(0,0,0,0.08);
+border-radius:10px;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
 padding:20px;
 margin-top:25px;
 }
@@ -95,6 +102,11 @@ color:#666;
 font-size:14px;
 }
 
+.result-title{
+margin-bottom:15px;
+color:#1f2937;
+}
+
 </style>
 
 <script>
@@ -109,36 +121,43 @@ document.getElementById("loader").style.display="block";
 
 <div class="container">
 
-<h1>Email → Company / Sector Identification</h1>
+<h1>Email Domain Intelligence & Sector Identification</h1>
+
+<p class="subtitle">
+Upload a CSV file containing email addresses to automatically identify
+company domains, industry sectors, and confidence scores using web-based
+data enrichment.
+</p>
+
+
+<div class="upload-section">
 
 <form method="POST" enctype="multipart/form-data" onsubmit="showLoader()">
 
-<div class="input-group">
+<label><b>Upload Email Dataset (CSV)</b></label>
 
-<input
-type="text"
-name="email"
-placeholder="Enter email (example: [hr@tcs.com](mailto:hr@tcs.com))"
+<div class="upload-row">
 
->
+<input type="file" name="file" accept=".csv" required>
 
-<button type="submit">Enrich</button>
+<button type="submit">Analyze Emails</button>
 
 </div>
 
-<p><b>OR upload CSV</b></p>
-
-<input type="file" name="file" accept=".csv">
-
 <div id="loader" class="loader">
-Processing request...
+Processing dataset and enriching email domains...
 </div>
 
 </form>
 
+</div>
+
+
 {% if results %}
 
 <div class="card">
+
+<h3 class="result-title">Enrichment Results</h3>
 
 <table>
 
@@ -165,12 +184,6 @@ Processing request...
 {% endfor %}
 
 </table>
-
-{% if excel_file %}
-<form method="POST" action="/download">
-    <button type="submit">Download Excel</button>
-</form>
-{% endif %}
 
 </div>
 
