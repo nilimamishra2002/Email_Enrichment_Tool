@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<title>Email → Company / Sector Identification</title>
+
+<style>
+
+body{
+font-family: "Segoe UI", Arial, sans-serif;
+background:#f4f6fb;
+margin:0;
+padding:40px;
+}
+
+.container{
+max-width:950px;
+margin:auto;
+}
+
+h1{
+color:#333;
+margin-bottom:25px;
+}
+
+.input-group{
+display:flex;
+gap:10px;
+margin-bottom:20px;
+}
+
+input[type="text"]{
+flex:1;
+padding:12px;
+font-size:15px;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+input[type="file"]{
+padding:6px;
+}
+
+button{
+background:#2563eb;
+color:white;
+border:none;
+padding:12px 20px;
+font-size:15px;
+border-radius:6px;
+cursor:pointer;
+}
+
+button:hover{
+background:#1e4ed8;
+}
+
+.card{
+background:white;
+border-radius:8px;
+box-shadow:0 3px 10px rgba(0,0,0,0.08);
+padding:20px;
+margin-top:25px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th{
+background:#2563eb;
+color:white;
+padding:12px;
+text-align:left;
+font-size:14px;
+}
+
+td{
+padding:12px;
+border-bottom:1px solid #eee;
+font-size:14px;
+}
+
+tr:hover{
+background:#f7f9ff;
+}
+
+.loader{
+display:none;
+margin-top:10px;
+color:#666;
+font-size:14px;
+}
+
+</style>
+
+<script>
+function showLoader(){
+document.getElementById("loader").style.display="block";
+}
+</script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Email → Company / Sector Identification</h1>
+
+<form method="POST" enctype="multipart/form-data" onsubmit="showLoader()">
+
+<div class="input-group">
+
+<input
+type="text"
+name="email"
+placeholder="Enter email (example: [hr@tcs.com](mailto:hr@tcs.com))"
+
+>
+
+<button type="submit">Enrich</button>
+
+</div>
+
+<p><b>OR upload CSV</b></p>
+
+<input type="file" name="file" accept=".csv">
+
+<div id="loader" class="loader">
+Processing request...
+</div>
+
+</form>
+
+{% if results %}
+
+<div class="card">
+
+<table>
+
+<tr>
+<th>Email</th>
+<th>Name</th>
+<th>Domain</th>
+<th>Company</th>
+<th>Sector</th>
+<th>Confidence</th>
+</tr>
+
+{% for r in results %}
+
+<tr>
+<td>{{ r.Email }}</td>
+<td>{{ r.Name }}</td>
+<td>{{ r.Domain }}</td>
+<td>{{ r.Company }}</td>
+<td>{{ r.Sector }}</td>
+<td>{{ r.Confidence }}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% if excel_file %}
+<form method="POST" action="/download">
+    <button type="submit">Download Excel</button>
+</form>
+{% endif %}
+
+</div>
+
+{% endif %}
+
+</div>
+
+</body>
+</html>
