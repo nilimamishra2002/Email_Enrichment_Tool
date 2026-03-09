@@ -78,7 +78,7 @@ def search_company(domain):
 
         driver.get(url)
 
-        time.sleep(1)
+        time.sleep(0.5)
 
         results = driver.find_elements(By.CSS_SELECTOR, "article")
 

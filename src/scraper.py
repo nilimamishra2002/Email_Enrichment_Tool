@@ -12,8 +12,6 @@ def scrape_website(domain):
         f"https://{domain}",
         f"https://www.{domain}",
         f"https://{domain}/about",
-        f"https://{domain}/about-us",
-        f"https://{domain}/company",
         f"https://{domain}/services"
     ]
 
@@ -51,12 +49,12 @@ def scrape_website(domain):
 
             # Headings
             headings = soup.find_all(["h1", "h2", "h3"])
-            for h in headings[:15]:
+            for h in headings[:12]:
                 text_parts.append(h.get_text())
 
             # Paragraphs
             paragraphs = soup.find_all("p")
-            for p in paragraphs[:25]:
+            for p in paragraphs[:15]:
                 text_parts.append(p.get_text())
 
             page_text = " ".join(text_parts)
